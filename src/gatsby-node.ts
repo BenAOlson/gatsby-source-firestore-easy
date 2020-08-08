@@ -40,7 +40,7 @@ export const sourceNodes = async (
           ...data,
           id: doc.id,
           internal: {
-            type: type ?? collection.replace(/\//g, '_'),
+            type: type ?? collection.split('/').slice(-1)[0],
             contentDigest: createContentDigest(data),
           },
         })
