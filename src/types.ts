@@ -36,8 +36,9 @@ export type OrderBy = [string, 'asc' | 'desc' | undefined] | string
 export type OptionCollection = {
   collection: string
   type?: string
-  whereFilters?: Where | Where[]
+  where?: Where | Where[]
   orderBy?: OrderBy[]
+  limit?: number
   skipTimestampConversion?: boolean
 }
 

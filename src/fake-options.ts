@@ -12,15 +12,9 @@ const options: Options = {
     {
       // type: 'DummyTest',
       collection: 'dummyTest',
-      whereFilters: [
-        // 'number',
-        // '>',
-        // 13,
-        ['number', '>=', 13],
-        // ['number', '==', 17],
-        // ['string', '==', 'string'],
-      ],
-      orderBy: [['number', 'desc']],
+      where: [['number', '>=', 13]],
+      orderBy: [['number', 'asc']],
+      limit: 1,
       // skipTimestampConversion: true,
     },
     // {

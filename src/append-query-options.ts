@@ -1,6 +1,37 @@
 import { Where, whereFilterOps, OrderBy } from './types'
 
-export const appendOrderBy = (
+const appendQueryOptions = (
+  query: firebase.firestore.CollectionReference<
+    firebase.firestore.DocumentData
+  >,
+  where: Where[] | Where | undefined,
+  orderBy: OrderBy[] | undefined,
+  limit: number | undefined
+) => {
+  let appendedQuery = query
+  appendedQuery = appendWhereFilters(query, where)
+  appendedQuery = appendOrderBy(query, orderBy)
+  appendedQuery = appendLimit(query, limit)
+
+  return appendedQuery
+}
+
+export default appendQueryOptions
+
+const appendLimit = (
+  query: firebase.firestore.CollectionReference<
+    firebase.firestore.DocumentData
+  >,
+  limit: number | undefined
+) => {
+  let appendedQuery = query
+  if (limit) {
+    appendedQuery = appendedQuery.limit(limit) as any
+  }
+  return appendedQuery
+}
+
+const appendOrderBy = (
   query: firebase.firestore.CollectionReference<
     firebase.firestore.DocumentData
   >,
@@ -19,45 +50,42 @@ export const appendOrderBy = (
   return appendedQuery
 }
 
-//TODO: remove redundant returns
-export const appendWhereFilters = (
+const appendWhereFilters = (
   query: firebase.firestore.CollectionReference<
     firebase.firestore.DocumentData
   >,
-  whereFilters: Where[] | Where | undefined
+  where: Where[] | Where | undefined
 ) => {
-  if (whereFilters?.length) {
-    let appendedQuery = query
-
-    //Only one whereFilter was passed (i.e., no 2d array)
-    if (!Array.isArray(whereFilters[0])) {
-      if (checkWhereFilters(whereFilters)) {
-        appendedQuery = query.where(...(whereFilters as Where)) as any //TODO: fix type
+  let appendedQuery = query
+  if (where?.length) {
+    //Only one where was passed (i.e., no 2d array)
+    if (!Array.isArray(where[0])) {
+      if (checkWhereFilters(where)) {
+        appendedQuery = query.where(...(where as Where)) as any //TODO: fix type
       }
       return appendedQuery
     }
 
-    //Multiple whereFilter filters were passed
-    whereFilters.forEach((where) => {
-      if (checkWhereFilters(where)) {
-        appendedQuery = query.where(...(where as Where)) as any //TODO: fix type
+    //Multiple where filters were passed
+    where.forEach((whereItem) => {
+      if (checkWhereFilters(whereItem)) {
+        appendedQuery = query.where(...(whereItem as Where)) as any //TODO: fix type
       }
     })
-    return appendedQuery
   }
-  return query
+  return appendedQuery
 }
 
 //A little convenience pre-checking, not exhaustive or anything
-const checkWhereFilters = (where: unknown[]) => {
-  if (where.length !== 3) {
+const checkWhereFilters = (whereItem: unknown[]) => {
+  if (whereItem.length !== 3) {
     console.warn(
-      "A 'whereFilter' entry was passed with an invalid number of elements"
+      "A 'where' entry was passed with an invalid number of elements"
     )
     return false
-  } else if (!whereFilterOps.includes(where[1] as any)) {
+  } else if (!whereFilterOps.includes(whereItem[1] as any)) {
     console.warn(
-      "Second element in one of the supplied 'whereFilters' was not a valid Firestore 'where' operator (e.g. '==', '<=' etc.)"
+      "Second element in one of the supplied 'where' was not a valid Firestore 'where' operator (e.g. '==', '<=' etc.)"
     )
     return false
   }

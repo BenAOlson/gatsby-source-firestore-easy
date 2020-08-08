@@ -1,9 +1,8 @@
 // import firebase from 'firebase'
 import firebase from 'firebase'
-import credentials from './credentials'
 import { initApp, dbData, convertAllTimestamps } from './utils'
 import options from './fake-options'
-import { appendWhereFilters, appendOrderBy } from './append-query-options'
+import appendQueryOptions from './append-query-options'
 console.log('-----')
 console.log('begin')
 console.log('-----')
@@ -20,14 +19,13 @@ const addFakeNodes = async () => {
       collection,
       type,
       skipTimestampConversion,
-      whereFilters,
+      where,
       orderBy,
+      limit,
     }) => {
       let query = firestore.collection(collection)
-      // queriedCol = queriedCol.where('number','==','17')
 
-      query = appendWhereFilters(query, whereFilters)
-      query = appendOrderBy(query, orderBy)
+      query = appendQueryOptions(query, where, orderBy, limit)
 
       console.log('completed')
       const completeCol = query //.where('number', '==', 17)
