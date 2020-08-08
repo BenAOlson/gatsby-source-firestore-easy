@@ -33,7 +33,7 @@ export type Where = [string, WhereFilterOp, any]
 export type OptionCollection = {
   type?: string
   collection: string
-  whereFilters?: Where[]
+  whereFilters?: Where[] | Where
   skipTimestampConversion?: boolean
 }
 
