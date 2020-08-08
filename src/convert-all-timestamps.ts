@@ -23,8 +23,6 @@ const traverse = (data: unknown) => {
   } else if (typeof data === 'object' && data !== null) {
     traverseObject(data as { [keyof: string]: unknown })
     // traverseObject(data)
-  } else {
-    //
   }
 }
 

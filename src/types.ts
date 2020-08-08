@@ -30,7 +30,6 @@ export type WhereFilterOp = typeof whereFilterOps[number]
 
 export type Where = [string, WhereFilterOp, any]
 
-// export type OrderBy = string | [string, 'asc' | 'desc']
 export type OrderBy = [string, 'asc' | 'desc' | undefined] | string
 
 export type OptionCollection = {
