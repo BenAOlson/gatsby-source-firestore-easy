@@ -3,7 +3,3 @@ node_modules
 /*.js
 /*.js.map
 /*.d.ts*
-
-# temporary debugging files
-credentials.ts
-data.json
