@@ -20,6 +20,7 @@ const options: Options = {
         // ['number', '==', 17],
         // ['string', '==', 'string'],
       ],
+      orderBy: [['number', 'desc']],
       // skipTimestampConversion: true,
     },
     // {

@@ -1,5 +1,25 @@
-import { Where, whereFilterOps } from './types'
+import { Where, whereFilterOps, OrderBy } from './types'
 
+export const appendOrderBy = (
+  query: firebase.firestore.CollectionReference<
+    firebase.firestore.DocumentData
+  >,
+  orderBy: OrderBy[] | undefined
+) => {
+  let appendedQuery = query
+  if (orderBy) {
+    orderBy.forEach((param) => {
+      if (typeof param === 'string') {
+        appendedQuery = query.orderBy(param) as any
+      } else {
+        appendedQuery = query.orderBy(...param) as any
+      }
+    })
+  }
+  return appendedQuery
+}
+
+//TODO: remove redundant returns
 export const appendWhereFilters = (
   query: firebase.firestore.CollectionReference<
     firebase.firestore.DocumentData
