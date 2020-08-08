@@ -1,0 +1,38 @@
+{
+  "name": "gatsby-source-firestore-easy",
+  "version": "0.0.0",
+  "description": "Fastest way to bring firestore data into Gatsby",
+  "main": "index.js",
+  "author": "Benjamin Olson <ben@whynotben.com>",
+  "license": "MIT",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "firestore"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BenAOlson/gatsby-source-firestore-easy"
+  },
+  "homepage": "https://github.com/BenAOlson/gatsby-source-firestore-easy#readme",
+  "bugs": {
+    "url": "https://github.com/BenAOlson/gatsby-source-firestore-easy/issues"
+  },
+  "devDependencies": {
+    "typescript": "^3.9.6"
+  },
+  "peerDependencies": {
+    "gatsby": "^2.19.38"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "watch": "tsc --watch"
+  },
+  "engines": {
+    "node": ">=10.19.0"
+  },
+  "dependencies": {
+    "@types/gm": "^1.18.7",
+    "gm": "^1.23.1"
+  }
+}
