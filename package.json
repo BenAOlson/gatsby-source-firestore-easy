@@ -19,6 +19,7 @@
     "url": "https://github.com/BenAOlson/gatsby-source-firestore-easy/issues"
   },
   "devDependencies": {
+    "gatsby": "^2.24.37",
     "typescript": "^3.9.6"
   },
   "peerDependencies": {

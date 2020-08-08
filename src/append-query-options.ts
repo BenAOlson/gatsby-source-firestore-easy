@@ -58,7 +58,7 @@ const appendWhereFilters = (
 ) => {
   let appendedQuery = query
   if (where?.length) {
-    //Only one where was passed (i.e., no 2d array)
+    //Only one 'where' was passed (i.e., no 2d array)
     if (!Array.isArray(where[0])) {
       if (checkWhereFilters(where)) {
         appendedQuery = query.where(...(where as Where)) as any //TODO: fix type
@@ -66,7 +66,7 @@ const appendWhereFilters = (
       return appendedQuery
     }
 
-    //Multiple where filters were passed
+    //Multiple 'where' filters were passed
     where.forEach((whereItem) => {
       if (checkWhereFilters(whereItem)) {
         appendedQuery = query.where(...(whereItem as Where)) as any //TODO: fix type
