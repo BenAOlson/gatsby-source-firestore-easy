@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-firestore-easy",
-  "version": "0.0.0",
-  "description": "Fastest way to bring firestore data into Gatsby",
+  "version": "0.1.0",
+  "description": "Fastest and easiest way to bring firestore data into Gatsby",
   "main": "index.js",
   "author": "Benjamin Olson <ben@whynotben.com>",
   "license": "MIT",
