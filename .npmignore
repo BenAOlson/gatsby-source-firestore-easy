@@ -6,3 +6,7 @@ tsconfig.json
 .npmignore
 .prettierignore
 .prettierrc
+
+# temporary debugging files
+credentials.ts
+data.json
