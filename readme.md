@@ -69,14 +69,14 @@ plugins: [
 ### Options
 
 
-|          option name           |              type             |        required        |
-|--------------------------------|-------------------------------|------------------------|
-|`collection`                    |`string`                       |yes                     |
-|`type`                          |`string`                       |no                      |
-|`where`                         |`[string, string, any][]`      |no                      |
-|`orderBy`                       |`(string | [string, string])[]`|no                      |
-|`limit`                         |`number`                       |no                      |
-|`skipTimestampConversion`       |`boolean`                      |no                      |
+|          option name           |               type              |        required        |
+|--------------------------------|---------------------------------|------------------------|
+|`collection`                    |`string`                         |yes                     |
+|`type`                          |`string`                         |no                      |
+|`where`                         |`[string, string, any][]`        |no                      |
+|`orderBy`                       |`(string \| [string, string])[]` |no                      |
+|`limit`                         |`number`                         |no                      |
+|`skipTimestampConversion`       |`boolean`                        |no                      |
 
 ### Option Details
 #### `collection`
