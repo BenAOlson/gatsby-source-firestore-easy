@@ -1,14 +1,14 @@
-import { Where, whereFilterOps, OrderBy } from './types'
+import { Where, whereFilterOps, OrderBy, EitherCollection } from './types'
 
 const appendQueryOptions = (
-  query: firebase.firestore.CollectionReference<
-    firebase.firestore.DocumentData
-  >,
+  query: EitherCollection,
   where: Where[] | Where | undefined,
   orderBy: OrderBy[] | undefined,
   limit: number | undefined
 ) => {
   let appendedQuery = query
+
+  //This order matters. Must be where -> orderBy -> limit
   appendedQuery = appendWhereFilters(query, where)
   appendedQuery = appendOrderBy(query, orderBy)
   appendedQuery = appendLimit(query, limit)
@@ -18,12 +18,7 @@ const appendQueryOptions = (
 
 export default appendQueryOptions
 
-const appendLimit = (
-  query: firebase.firestore.CollectionReference<
-    firebase.firestore.DocumentData
-  >,
-  limit: number | undefined
-) => {
+const appendLimit = (query: EitherCollection, limit: number | undefined) => {
   let appendedQuery = query
   if (limit) {
     appendedQuery = appendedQuery.limit(limit) as any
@@ -32,9 +27,7 @@ const appendLimit = (
 }
 
 const appendOrderBy = (
-  query: firebase.firestore.CollectionReference<
-    firebase.firestore.DocumentData
-  >,
+  query: EitherCollection,
   orderBy: OrderBy[] | undefined
 ) => {
   let appendedQuery = query
@@ -51,9 +44,7 @@ const appendOrderBy = (
 }
 
 const appendWhereFilters = (
-  query: firebase.firestore.CollectionReference<
-    firebase.firestore.DocumentData
-  >,
+  query: EitherCollection,
   where: Where[] | Where | undefined
 ) => {
   let appendedQuery = query
