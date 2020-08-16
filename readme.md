@@ -121,7 +121,7 @@ Use to filter query mirroring firebase SDK. Must be a 2d array of three strings,
 E.g.:
 ```javascript
 where: [
-  ['field', '>=', 'value']
+  ['field', '>=', 'value'],
   ['field', '<', 'otherValue']
 ]
 ```
@@ -133,7 +133,7 @@ E.g.:
 ```javascript
 orderBy: [
   'field',
-  ['field', 'desc'],
+  ['field', 'desc']
 ]
 ```
 
@@ -145,7 +145,7 @@ Use to limit the number of results returned using `collection(YOUR_STR).limit(YO
 E.g.: `limit: 5`
 
 ###### `skipTimestampConversion`
-By default, `gatsby-source-firestore-easy` automatically converts all firestore timestamps to a date object so that they will yield a useable format in GraphQL. You very very probably want to use this default functionality. However, if you're very very sure that you do not want the timestamps to be automatically converted, you can disable that future by setting this option to true.
+By default, `gatsby-source-firestore-easy` automatically converts all firestore timestamps to a date object so that they will yield a useable format in GraphQL. You very very probably want to use this default functionality. However, if you're very very sure that you do not want the timestamps to be automatically converted, you can disable that feature by setting this option to true.
 
 E.g.:
 ```javascript
