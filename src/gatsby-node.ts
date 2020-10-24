@@ -1,15 +1,14 @@
 import { SourceNodesArgs } from 'gatsby'
-import { Options, EitherDoc, OptionCollection } from './types'
-import firebase from 'firebase'
+import { Options, OptionCollection, FbDoc } from './types'
 import admin from 'firebase-admin'
 import convertAllTimestamps from './convert-all-timestamps'
 import appendQueryOptions from './append-query-options'
 
 export const sourceNodes = async (
   { actions, createContentDigest, reporter }: SourceNodesArgs,
-  { collections, config, adminCredential }: Options
+  { collections, adminCredential }: Options
 ) => {
-  const initFirebase = (): admin.app.App | firebase.app.App | undefined => {
+  const initFirebase = (): admin.app.App | undefined => {
     try {
       if (adminCredential) {
         const credential = admin.credential.cert(
@@ -22,15 +21,9 @@ export const sourceNodes = async (
           },
           'gatsby-source-firestore-easy'
         )
-      } else if (config) {
-        reporter.warn(
-          "The 'config' option for gatsby-source-firestore-easy has been deprecated, and will be removed in the full release. " +
-            'See https://github.com/BenAOlson/gatsby-source-firestore-easy#readme for more details'
-        )
-        return firebase.initializeApp(config, 'gatsby-source-firestore-easy')
       } else {
         throw new Error(
-          'gatsby-source-firestore-easy needs either a config or adminCredentials option in order to initialize Firebase'
+          'gatsby-source-firestore-easy needs adminCredentials option in order to initialize Firebase'
         )
       }
     } catch (err) {
@@ -56,7 +49,7 @@ export const sourceNodes = async (
       query = appendQueryOptions(query, where, orderBy, limit)
 
       const snapshot = await query.get()
-      snapshot.docs.forEach((doc: EitherDoc) => {
+      snapshot.docs.forEach((doc: FbDoc) => {
         const data = doc.data()
         if (!skipTimestampConversion) convertAllTimestamps(data)
         actions.createNode({

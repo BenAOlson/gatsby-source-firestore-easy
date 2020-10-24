@@ -116,7 +116,7 @@ Name that will be used in GraphQL. If left out, this will default to the collect
 E.g.: `type: 'TheNameYouWant'`
 
 ###### `where`
-Use to filter query mirroring firebase SDK. Must be a 2d array of three strings, with each string corresponding to the required parameters of firebase's `where` method. See the firebase documentation for more details
+Use to filter query mirroring firebase SDK. Must be a 2d array of three values, with each value corresponding to the required parameters of firebase's `where` method. See the firebase documentation for more details on what to pass into the `where` method.
 
 E.g.:
 ```javascript
@@ -145,7 +145,7 @@ Use to limit the number of results returned using `collection(YOUR_STR).limit(YO
 E.g.: `limit: 5`
 
 ###### `skipTimestampConversion`
-By default, `gatsby-source-firestore-easy` automatically converts all firestore timestamps to a date object so that they will yield a useable format in GraphQL. You very very probably want to use this default functionality. However, if you're very very sure that you do not want the timestamps to be automatically converted, you can disable that feature by setting this option to true.
+By default, `gatsby-source-firestore-easy` automatically converts all firestore timestamps to date objects so that they will yield a useable format in GraphQL. You very very probably want to use this default functionality. However, if you're very very sure that you do not want the timestamps to be automatically converted, you can disable that feature by setting this option to true.
 
 E.g.:
 ```javascript

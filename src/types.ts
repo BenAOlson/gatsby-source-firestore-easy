@@ -1,17 +1,9 @@
-export type EitherDoc =
-  | firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>
-  | FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>
-
-export type EitherCollection =
-  | FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>
-  | firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
-
-export type FbCredentials = {
-  apiKey: string
-  appId: string
-  databaseURL: string
-  projectId: string
-}
+export type FbDoc = FirebaseFirestore.QueryDocumentSnapshot<
+  FirebaseFirestore.DocumentData
+>
+export type FbCollection = FirebaseFirestore.CollectionReference<
+  FirebaseFirestore.DocumentData
+>
 
 export type Timestamp = {
   seconds: number
@@ -47,6 +39,5 @@ export type OptionCollection = {
 
 export type Options = {
   adminCredential?: { credential: string | Object; databaseURL: string }
-  config?: FbCredentials
   collections: OptionCollection[]
 }

@@ -1,7 +1,7 @@
-import { Where, whereFilterOps, OrderBy, EitherCollection } from './types'
+import { Where, whereFilterOps, OrderBy, FbCollection } from './types'
 
 const appendQueryOptions = (
-  query: EitherCollection,
+  query: FbCollection,
   where: Where[] | Where | undefined,
   orderBy: OrderBy[] | undefined,
   limit: number | undefined
@@ -18,7 +18,7 @@ const appendQueryOptions = (
 
 export default appendQueryOptions
 
-const appendLimit = (query: EitherCollection, limit: number | undefined) => {
+const appendLimit = (query: FbCollection, limit: number | undefined) => {
   let appendedQuery = query
   if (limit) {
     appendedQuery = appendedQuery.limit(limit) as any
@@ -26,10 +26,7 @@ const appendLimit = (query: EitherCollection, limit: number | undefined) => {
   return appendedQuery
 }
 
-const appendOrderBy = (
-  query: EitherCollection,
-  orderBy: OrderBy[] | undefined
-) => {
+const appendOrderBy = (query: FbCollection, orderBy: OrderBy[] | undefined) => {
   let appendedQuery = query
   if (orderBy) {
     orderBy.forEach((param) => {
@@ -44,7 +41,7 @@ const appendOrderBy = (
 }
 
 const appendWhereFilters = (
-  query: EitherCollection,
+  query: FbCollection,
   where: Where[] | Where | undefined
 ) => {
   let appendedQuery = query
