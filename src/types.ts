@@ -5,11 +5,6 @@ export type FbCollection = FirebaseFirestore.CollectionReference<
   FirebaseFirestore.DocumentData
 >
 
-export type Timestamp = {
-  seconds: number
-  nanoseconds: number
-}
-
 export const whereFilterOps = [
   '<',
   '<=',

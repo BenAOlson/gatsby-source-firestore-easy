@@ -1,8 +1,12 @@
-import { Timestamp } from './types'
+import { firestore } from 'firebase-admin'
 
-//TODO: fix types, figure out less breakble way to check if object is a Timestamp
-
-const timestampKeys = ['seconds', 'nanoseconds', '_seconds', '_nanoseconds']
+/*
+  TODO:
+  ----
+    * Refactor to return new object instead of mutating
+    * DRY up code
+    * Accept firestore document snapshots as well as objs/whatever?
+ */
 
 /**
  * Recursively moves through Firestore document data, searching for
@@ -22,8 +26,8 @@ export default convertAllTimestamps
 
 const traverseArray = (arr: unknown[]) => {
   arr.forEach((elem, i) => {
-    if (checkIsTimestamp(elem)) {
-      arr[i] = convertTimestamp(elem as Timestamp)
+    if (elem instanceof firestore.Timestamp) {
+      arr[i] = elem.toDate()
     } else {
       convertAllTimestamps(elem)
     }
@@ -32,19 +36,11 @@ const traverseArray = (arr: unknown[]) => {
 
 const traverseObject = (obj: { [keyof: string]: unknown }) => {
   Object.keys(obj).forEach((key) => {
-    if (checkIsTimestamp(obj[key])) {
-      obj[key] = convertTimestamp(obj[key] as Timestamp)
+    const value = obj[key]
+    if (value instanceof firestore.Timestamp) {
+      obj[key] = value.toDate()
     } else {
       convertAllTimestamps(obj[key])
     }
   })
 }
-
-const checkIsTimestamp = (data: unknown) => {
-  if (typeof data === 'object' && data !== null) {
-    return Object.keys(data).every((value) => timestampKeys.includes(value))
-  }
-}
-
-const convertTimestamp = (timestamp: Timestamp) =>
-  new Date(timestamp.seconds * 1000)
