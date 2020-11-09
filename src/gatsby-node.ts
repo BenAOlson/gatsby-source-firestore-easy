@@ -1,38 +1,16 @@
-import { SourceNodesArgs } from 'gatsby'
-import { Options, OptionCollection, FbDoc } from './types'
+import { Reporter, SourceNodesArgs } from 'gatsby'
+import { Options, OptionCollection, FbDoc, AdminCredential } from './types'
 import admin from 'firebase-admin'
 import convertAllTimestamps from './convert-all-timestamps'
 import appendQueryOptions from './append-query-options'
 
+//TODO: include unit tests for sourceNodes
 export const sourceNodes = async (
   { actions, createContentDigest, reporter }: SourceNodesArgs,
   { collections, adminCredential }: Options
 ) => {
-  const initFirebase = (): admin.app.App | undefined => {
-    try {
-      if (adminCredential) {
-        const credential = admin.credential.cert(
-          makeCredentialUsable(adminCredential.credential)
-        )
-        return admin.initializeApp(
-          {
-            credential,
-            databaseURL: adminCredential.databaseURL,
-          },
-          'gatsby-source-firestore-easy'
-        )
-      } else {
-        throw new Error(
-          'gatsby-source-firestore-easy needs adminCredentials option in order to initialize Firebase'
-        )
-      }
-    } catch (err) {
-      reporter.warn(err)
-      return
-    }
-  }
-
-  const initializedApp = initFirebase()
+  const initializedApp = initFirebase(adminCredential, reporter)
+  //reporter.warn is in the initializedApp function, so just return here on failure
   if (!initializedApp) return
   const firestore = initializedApp.firestore()
 
@@ -66,6 +44,32 @@ export const sourceNodes = async (
   )
   await Promise.all(promises)
   return
+}
+
+const initFirebase = (
+  adminCredential: AdminCredential | undefined,
+  reporter: Reporter
+): admin.app.App | undefined => {
+  try {
+    if (adminCredential) {
+      const credential = admin.credential.cert(
+        makeCredentialUsable(adminCredential.credential)
+      )
+      return admin.initializeApp(
+        {
+          credential,
+          databaseURL: adminCredential.databaseURL,
+        },
+        'gatsby-source-firestore-easy'
+      )
+    } else {
+      throw new Error(
+        'gatsby-source-firestore-easy needs adminCredentials option in order to initialize Firebase'
+      )
+    }
+  } catch (err) {
+    reporter.warn(err)
+  }
 }
 
 const makeCredentialUsable = (credential: unknown): Object => {

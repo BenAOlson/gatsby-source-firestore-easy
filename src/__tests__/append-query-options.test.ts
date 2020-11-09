@@ -5,7 +5,7 @@ import { OrderBy, Where } from '../types'
 
 describe('adds firestore query params to query', () => {
   it('should filter query', async () => {
-    const gen = setUpTearDown()
+    const gen = setUpTearDownCollection()
     const colRef = (await gen.next()).value
     if (colRef) {
       const min = 3
@@ -35,7 +35,7 @@ describe('adds firestore query params to query', () => {
 
   it('should order query', async () => {
     const colSize = 5
-    const gen = setUpTearDown(colSize)
+    const gen = setUpTearDownCollection(colSize)
     const colRef = (await gen.next()).value
     if (colRef) {
       const orderOption: OrderBy[] = [['val', 'desc']]
@@ -58,7 +58,7 @@ describe('adds firestore query params to query', () => {
   })
 
   it('should limit query', async () => {
-    const gen = setUpTearDown()
+    const gen = setUpTearDownCollection()
     const colRef = (await gen.next()).value
     if (colRef) {
       const limitOption = 2
@@ -79,7 +79,11 @@ describe('adds firestore query params to query', () => {
   })
 })
 
-async function* setUpTearDown(colSize = 10) {
+/**
+ * Generator to create and then delete a mock firestore collection
+ * @param colSize Size of the collection in number of documents, defaults to 10
+ */
+async function* setUpTearDownCollection(colSize = 10) {
   //Type seems to be for non-admin firebase sdk, but still works for testing for now
   const app = (firebase.initializeAdminApp({
     projectId: 'test-project',
@@ -107,5 +111,9 @@ async function* setUpTearDown(colSize = 10) {
   yield
 }
 
+/**
+ * Get an error string for a given collection reference
+ * @param colRef Collection reference
+ */
 const getErrorStr = (colRef: FirebaseFirestore.CollectionReference | void) =>
   `Something went wrong bootstrapping db. colRef: ${colRef}`

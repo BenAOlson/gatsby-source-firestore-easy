@@ -1,9 +1,6 @@
 export type FbDoc = FirebaseFirestore.QueryDocumentSnapshot<
   FirebaseFirestore.DocumentData
 >
-export type FbCollection = FirebaseFirestore.CollectionReference<
-  FirebaseFirestore.DocumentData
->
 
 export const whereFilterOps = [
   '<',
@@ -33,6 +30,11 @@ export type OptionCollection = {
 }
 
 export type Options = {
-  adminCredential?: { credential: string | Object; databaseURL: string }
+  adminCredential?: AdminCredential
   collections: OptionCollection[]
+}
+
+export type AdminCredential = {
+  credential: string | Object
+  databaseURL: string
 }

@@ -1,4 +1,4 @@
-import { Where, whereFilterOps, OrderBy, FbCollection } from './types'
+import { Where, whereFilterOps, OrderBy } from './types'
 import { firestore } from 'firebase-admin'
 
 const appendQueryOptions = (
@@ -68,7 +68,6 @@ const appendWhereFilters = (
       }
     })
   }
-  // return appendedQuery
   return appendedQuery
 }
 
