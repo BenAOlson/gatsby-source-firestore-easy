@@ -21,6 +21,7 @@ The fastest and easiest way to bring firestore data into Gatsby. Just include th
           - [`orderBy`](#orderby)
           - [`limit`](#limit)
           - [`skipTimestampConversion`](#skiptimestampconversion)
+  - [Contributing](#contributing)
 
 
 ## Install
@@ -152,3 +153,7 @@ E.g.:
 //Don't do this, but you technically can do this.
 skipTimestampConversion: true
 ```
+
+## Contributing
+
+If you'd like to contribute (or otherwise fork and modify to your own needs), you'll need to get a local firestore emulator running on port `8080` to run tests. See firebase documentation for that process.
