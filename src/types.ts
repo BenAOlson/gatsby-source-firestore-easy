@@ -1,7 +1,3 @@
-export type FbDoc = FirebaseFirestore.QueryDocumentSnapshot<
-  FirebaseFirestore.DocumentData
->
-
 export const whereFilterOps = [
   '<',
   '<=',
@@ -31,7 +27,7 @@ export type OptionCollection = {
 
 export type Options = {
   adminCredential?: AdminCredential
-  collections: OptionCollection[]
+  collections: Array<OptionCollection | string>
 }
 
 export type AdminCredential = {

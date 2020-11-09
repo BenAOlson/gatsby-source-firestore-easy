@@ -2,12 +2,12 @@
 
 The fastest and easiest way to bring firestore data into Gatsby. Just include the collections you want to use, and optionally filter/order/limit your queries with an api that mirrors the firebase SDK.
 
-*Note: The `config` option from version 0.1 has been deprecated, and support for it will be removed in 1.0.0. Please switch over your configuration to use the new admin credential configuration as outlined in this document.*
-
 - [`gatsby-source-firestore-easy`](#gatsby-source-firestore-easy)
   - [Install](#install)
   - [How to use](#how-to-use)
     - [General Setup](#general-setup)
+      - [Basic config](#basic-config)
+      - [Config with more options](#config-with-more-options)
     - [Options](#options)
       - [`adminCredential`](#admincredential)
         - [`credential`](#credential)
@@ -28,11 +28,18 @@ The fastest and easiest way to bring firestore data into Gatsby. Just include th
 
 `npm i gatsby-source-firestore-easy`
 
+--or--
+
+`yarn add gatsby-source-firestore-easy`
+
 ## How to use
 
 ### General Setup
 
-Example config:
+#### Basic config
+
+All this plugin needs is firebase admin credentials and a list of collections to source. As such, the simplest possible config would be something like:
+
 ```javascript
 // Include in gatsby-config.js
 plugins: [
@@ -44,15 +51,36 @@ plugins: [
         databaseURL: 'YOUR_FIREBASE_DATABASE_URL',
       },
       collections: [
+          'collectionPath',
+          'otherCollection/someDocument/subCollection',
+          'iThinkYouGetTheIdea'
+      ]
+    },
+  },
+]
+```
+#### Config with more options
+
+Alternatively, you can specifiy a range of additional options per collection, such as query parameters (`where`, `orderby`, and `limit`) or a 'type' for graphQL:
+
+```javascript
+// Include in gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-source-firestore-easy`,
+    options: {
+      adminCredential: {
+        credential: process.env.FIREBASE_CREDENTIAL, //See details for this option
+        databaseURL: 'YOUR_FIREBASE_DATABASE_URL',
+      },
+      collections: [
+        'simpleCollectionPath',
         {
-          collection: 'collectionPath',
-        },
-        {
-          collection: 'otherCollection/docName/subcollectionName',
+          collection: 'differentCollectionPath',
           type: 'OptionalNameForGraphQLToUseInsteadOfTheCollectionName',
         },
         {
-          collection: 'thirdCollectionPath',
+          collection: 'anotherCollectionPath',
           where: [
             ['yourFieldName', '>=', 'yourDesiredFilterValue' ],
             ['yourFieldName', '<', 'someOtherValue' ],
@@ -62,7 +90,7 @@ plugins: [
           ],
           limit: 10,
         },
-      ]
+      ],
     },
   },
 ]
@@ -90,7 +118,7 @@ This will be a string with your databaseURL from Firebase. Conveniently, Firebas
 
 
 #### `collections`
-This is an array of objects that you want to source in your Gatsby project. The properties that can/must be used in these objects are defined below.
+This is an array of either strings of collection/subcollection paths, or else objects for each collection that you want to source in your Gatsby project. The properties that can be used in these objects are defined below.
 
 ##### Collections Quick Reference
 
@@ -146,7 +174,7 @@ Use to limit the number of results returned using `collection(YOUR_STR).limit(YO
 E.g.: `limit: 5`
 
 ###### `skipTimestampConversion`
-By default, `gatsby-source-firestore-easy` automatically converts all firestore timestamps to date objects so that they will yield a useable format in GraphQL. You very very probably want to use this default functionality. However, if you're very very sure that you do not want the timestamps to be automatically converted, you can disable that feature by setting this option to true.
+By default, `gatsby-source-firestore-easy` automatically converts all firestore timestamps to date objects so that they will yield a useable format in GraphQL. You very very probably want to use this default functionality. However, if you're very very sure that you do not want the timestamps to be automatically converted, you can disable that feature by setting this option to true. If you're wondering whether or not to sure this option, the answer is "no, do not use this option."
 
 E.g.:
 ```javascript
