@@ -1,7 +1,8 @@
 import { Where, whereFilterOps, OrderBy, FbCollection } from './types'
+import { firestore } from 'firebase-admin'
 
 const appendQueryOptions = (
-  query: FbCollection,
+  query: firestore.CollectionReference,
   where: Where[] | Where | undefined,
   orderBy: OrderBy[] | undefined,
   limit: number | undefined
@@ -9,16 +10,19 @@ const appendQueryOptions = (
   let appendedQuery = query
 
   //This order matters. Must be where -> orderBy -> limit
-  appendedQuery = appendWhereFilters(query, where)
-  appendedQuery = appendOrderBy(query, orderBy)
-  appendedQuery = appendLimit(query, limit)
+  appendedQuery = appendWhereFilters(appendedQuery, where)
+  appendedQuery = appendOrderBy(appendedQuery, orderBy)
+  appendedQuery = appendLimit(appendedQuery, limit)
 
   return appendedQuery
 }
 
 export default appendQueryOptions
 
-const appendLimit = (query: FbCollection, limit: number | undefined) => {
+const appendLimit = (
+  query: firestore.CollectionReference,
+  limit: number | undefined
+) => {
   let appendedQuery = query
   if (limit) {
     appendedQuery = appendedQuery.limit(limit) as any
@@ -26,14 +30,17 @@ const appendLimit = (query: FbCollection, limit: number | undefined) => {
   return appendedQuery
 }
 
-const appendOrderBy = (query: FbCollection, orderBy: OrderBy[] | undefined) => {
+const appendOrderBy = (
+  query: firestore.CollectionReference,
+  orderBy: OrderBy[] | undefined
+) => {
   let appendedQuery = query
   if (orderBy) {
     orderBy.forEach((param) => {
       if (typeof param === 'string') {
-        appendedQuery = query.orderBy(param) as any
+        appendedQuery = appendedQuery.orderBy(param) as any
       } else {
-        appendedQuery = query.orderBy(...param) as any
+        appendedQuery = appendedQuery.orderBy(...param) as any
       }
     })
   }
@@ -41,7 +48,7 @@ const appendOrderBy = (query: FbCollection, orderBy: OrderBy[] | undefined) => {
 }
 
 const appendWhereFilters = (
-  query: FbCollection,
+  query: firestore.CollectionReference,
   where: Where[] | Where | undefined
 ) => {
   let appendedQuery = query
@@ -49,7 +56,7 @@ const appendWhereFilters = (
     //Only one 'where' was passed (i.e., no 2d array)
     if (!Array.isArray(where[0])) {
       if (checkWhereFilters(where)) {
-        appendedQuery = query.where(...(where as Where)) as any //TODO: fix type
+        appendedQuery = appendedQuery.where(...(where as Where)) as any //TODO: fix type
       }
       return appendedQuery
     }
@@ -57,10 +64,11 @@ const appendWhereFilters = (
     //Multiple 'where' filters were passed
     where.forEach((whereItem) => {
       if (checkWhereFilters(whereItem)) {
-        appendedQuery = query.where(...(whereItem as Where)) as any //TODO: fix type
+        appendedQuery = appendedQuery.where(...(whereItem as Where)) as any //TODO: fix type
       }
     })
   }
+  // return appendedQuery
   return appendedQuery
 }
 

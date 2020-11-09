@@ -1,5 +1,12 @@
 node_modules
 
+# firebase files
+firebase*json
+firestore.indexes.json
+firestore.rules
+*.log
+.firebaserc
+
 /*.js
 /*.js.map
 /*.d.ts*

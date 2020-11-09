@@ -19,6 +19,7 @@
     "url": "https://github.com/BenAOlson/gatsby-source-firestore-easy/issues"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^1.0.8",
     "@types/jest": "^26.0.15",
     "gatsby": "^2.24.37",
     "jest": "^26.6.1",
