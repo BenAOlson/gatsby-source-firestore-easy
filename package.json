@@ -27,7 +27,7 @@
     "typescript": "^3.9.6"
   },
   "peerDependencies": {
-    "gatsby": "^2.19.38"
+    "gatsby": "^3.0.0"
   },
   "scripts": {
     "build": "tsc -b",
