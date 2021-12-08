@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-firestore-easy",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Fastest and easiest way to bring firestore data into Gatsby",
   "main": "index.js",
   "author": "Benjamin Olson <ben@whynotben.com>",
@@ -27,7 +27,7 @@
     "typescript": "^3.9.6"
   },
   "peerDependencies": {
-    "gatsby": "^2.19.38"
+    "gatsby": ">=2.0.0"
   },
   "scripts": {
     "build": "tsc -b",
@@ -38,8 +38,6 @@
     "node": ">=10.19.0"
   },
   "dependencies": {
-    "@types/gm": "^1.18.7",
-    "firebase-admin": "^9.1.0",
-    "gm": "^1.23.1"
+    "firebase-admin": "^9.1.0"
   }
 }

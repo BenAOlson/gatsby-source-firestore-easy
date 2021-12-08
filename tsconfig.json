@@ -2,9 +2,9 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["ESNext"],
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
     "noUnusedLocals": false,
     "forceConsistentCasingInFileNames": true,
     "noImplicitThis": true,
