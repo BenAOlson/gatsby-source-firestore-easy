@@ -80,13 +80,17 @@ const initFirebase = (
       const credential = admin.credential.cert(
         makeCredentialUsable(adminCredential.credential)
       )
-      return admin.initializeApp(
-        {
-          credential,
-          databaseURL: adminCredential.databaseURL,
-        },
-        'gatsby-source-firestore-easy'
-      )
+      if (!admin.apps.map(e => e? e.name : e).includes('gatsby-source-firestore-easy')) {
+        return admin.initializeApp(
+          {
+            credential,
+            databaseURL: adminCredential.databaseURL,
+          },
+          'gatsby-source-firestore-easy'
+        )
+      } else {
+        return admin.app('gatsby-source-firestore-easy')
+      }
     } else {
       throw new Error(
         'gatsby-source-firestore-easy needs adminCredentials option in order to initialize Firebase'
